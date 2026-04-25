@@ -33,7 +33,6 @@ type Props = {
 };
 
 let apiPromise: Promise<void> | null = null;
-const YOUTUBE_HOST = "https://www.youtube-nocookie.com";
 
 function loadYouTubeApi() {
   if (!apiPromise) {
@@ -110,14 +109,13 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
 
         player = new window.YT.Player(containerRef.current, {
           videoId,
-          host: YOUTUBE_HOST,
           playerVars: {
             autoplay: 1,
             controls: 1,
             playsinline: 1,
             mute: 1,
             rel: 0,
-            widget_referrer: `${window.location.origin}${window.location.pathname}`
+            origin: window.location.origin
           },
           events: {
             onReady: (event) => {
