@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
 
-test.beforeEach(async ({ page }) => {
+const consoleErrorsByTestId = new Map<string, string[]>();
+
+test.beforeEach(async ({ page }, testInfo) => {
   const consoleErrors: string[] = [];
+  consoleErrorsByTestId.set(testInfo.testId, consoleErrors);
 
   page.on("pageerror", (error) => {
     throw new Error(`Browser runtime error: ${error.message}`);
@@ -48,11 +51,19 @@ test.beforeEach(async ({ page }) => {
       PlayerState: { PLAYING: 1 }
     };
   });
+});
 
-  test.info().attach("console-errors", {
-    body: JSON.stringify(consoleErrors),
+test.afterEach(async ({}, testInfo) => {
+  const consoleErrors = consoleErrorsByTestId.get(testInfo.testId) ?? [];
+
+  await testInfo.attach("console-errors", {
+    body: JSON.stringify(consoleErrors, null, 2),
     contentType: "application/json"
   });
+
+  expect(consoleErrors, "Browser console errors should be empty").toEqual([]);
+
+  consoleErrorsByTestId.delete(testInfo.testId);
 });
 
 test("home to quiz flow has no browser runtime errors", async ({ page }) => {

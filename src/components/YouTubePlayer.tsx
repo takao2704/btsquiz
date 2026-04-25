@@ -45,6 +45,11 @@ function loadYouTubeApi() {
         resolve();
       };
 
+      if (window.YT?.Player) {
+        done();
+        return;
+      }
+
       const existing = document.querySelector('script[src="https://www.youtube.com/iframe_api"]') as HTMLScriptElement | null;
       if (!existing) {
         const script = document.createElement("script");
@@ -56,11 +61,7 @@ function loadYouTubeApi() {
         document.body.append(script);
       }
 
-      if (window.YT?.Player) {
-        done();
-      } else {
-        window.onYouTubeIframeAPIReady = () => done();
-      }
+      window.onYouTubeIframeAPIReady = () => done();
     });
   }
 
