@@ -95,11 +95,23 @@ function loadYouTubeApi() {
 export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<number | null>(null);
+  const onReadyRef = useRef(onReady);
+  const onTickRef = useRef(onTick);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    onReadyRef.current = onReady;
+  }, [onReady]);
+
+  useEffect(() => {
+    onTickRef.current = onTick;
+  }, [onTick]);
 
   useEffect(() => {
     let mounted = true;
     let player: { getCurrentTime: () => number; destroy: () => void } | null = null;
+
+    setErrorMessage(null);
 
     void loadYouTubeApi()
       .then(() => {
@@ -120,15 +132,21 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
           events: {
             onReady: (event) => {
               event.target.playVideo();
-              onReady();
+              onReadyRef.current();
             },
             onStateChange: (event) => {
               if (event.data === window.YT.PlayerState.PLAYING && timerRef.current === null) {
                 timerRef.current = window.setInterval(() => {
                   if (player) {
-                    onTick(player.getCurrentTime());
+                    onTickRef.current(player.getCurrentTime());
                   }
                 }, 200);
+                return;
+              }
+
+              if (event.data !== window.YT.PlayerState.PLAYING && timerRef.current !== null) {
+                clearInterval(timerRef.current);
+                timerRef.current = null;
               }
             }
           }
@@ -148,7 +166,7 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
       }
       player?.destroy();
     };
-  }, [videoId, onReady, onTick]);
+  }, [videoId]);
 
   if (errorMessage) {
     return (
