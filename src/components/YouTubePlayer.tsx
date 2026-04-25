@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
@@ -35,18 +35,31 @@ let apiPromise: Promise<void> | null = null;
 
 function loadYouTubeApi() {
   if (!apiPromise) {
-    apiPromise = new Promise<void>((resolve) => {
-      const existing = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+    apiPromise = new Promise<void>((resolve, reject) => {
+      const timeoutId = window.setTimeout(() => {
+        reject(new Error("YouTube API の読み込みがタイムアウトしました。"));
+      }, 8000);
+
+      const done = () => {
+        clearTimeout(timeoutId);
+        resolve();
+      };
+
+      const existing = document.querySelector('script[src="https://www.youtube.com/iframe_api"]') as HTMLScriptElement | null;
       if (!existing) {
         const script = document.createElement("script");
         script.src = "https://www.youtube.com/iframe_api";
+        script.onerror = () => {
+          clearTimeout(timeoutId);
+          reject(new Error("YouTube API スクリプトの読み込みに失敗しました。"));
+        };
         document.body.append(script);
       }
 
       if (window.YT?.Player) {
-        resolve();
+        done();
       } else {
-        window.onYouTubeIframeAPIReady = () => resolve();
+        window.onYouTubeIframeAPIReady = () => done();
       }
     });
   }
@@ -57,46 +70,49 @@ function loadYouTubeApi() {
 export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
     let player: { getCurrentTime: () => number; destroy: () => void } | null = null;
 
-    void loadYouTubeApi().then(() => {
-      if (!mounted) {
-        return;
-      }
+    void loadYouTubeApi()
+      .then(() => {
+        if (!mounted || !containerRef.current) {
+          return;
+        }
 
-      if (!containerRef.current) {
-        return;
-      }
-
-      player = new window.YT.Player(containerRef.current.id, {
-        videoId,
-        playerVars: {
-          autoplay: 1,
-          controls: 1,
-          playsinline: 1,
-          mute: 1,
-          rel: 0
-        },
-        events: {
-          onReady: (event) => {
-            event.target.playVideo();
-            onReady();
+        player = new window.YT.Player(containerRef.current.id, {
+          videoId,
+          playerVars: {
+            autoplay: 1,
+            controls: 1,
+            playsinline: 1,
+            mute: 1,
+            rel: 0
           },
-          onStateChange: (event) => {
-            if (event.data === window.YT.PlayerState.PLAYING && timerRef.current === null) {
-              timerRef.current = window.setInterval(() => {
-                if (player) {
-                  onTick(player.getCurrentTime());
-                }
-              }, 200);
+          events: {
+            onReady: (event) => {
+              event.target.playVideo();
+              onReady();
+            },
+            onStateChange: (event) => {
+              if (event.data === window.YT.PlayerState.PLAYING && timerRef.current === null) {
+                timerRef.current = window.setInterval(() => {
+                  if (player) {
+                    onTick(player.getCurrentTime());
+                  }
+                }, 200);
+              }
             }
           }
-        }
+        });
+      })
+      .catch((error: unknown) => {
+        const message = error instanceof Error ? error.message : "動画プレイヤーの初期化に失敗しました。";
+        console.error("[YouTubePlayer]", message);
+        setErrorMessage(message);
       });
-    });
 
     return () => {
       mounted = false;
@@ -107,6 +123,15 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
       player?.destroy();
     };
   }, [videoId, onReady, onTick]);
+
+  if (errorMessage) {
+    return (
+      <div className="player player-error" role="alert">
+        <p>プレイヤー初期化エラー: {errorMessage}</p>
+        <p>通信状態を確認して再読み込みしてください。</p>
+      </div>
+    );
+  }
 
   return <div id="yt-player" ref={containerRef} className="player" />;
 }

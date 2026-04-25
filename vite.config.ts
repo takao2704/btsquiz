@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [react()],
   base: basePath,
   test: {
-    environment: "jsdom"
+    environment: "jsdom",
+    include: ["src/**/*.test.ts"]
   }
 });
