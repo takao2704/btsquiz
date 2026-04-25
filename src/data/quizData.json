@@ -4,17 +4,13 @@
   "videoDuration": 223.0,
   "members": ["RM", "Jin", "SUGA", "j-hope", "Jimin", "V", "Jungkook"],
   "soloSegments": [
-    { "startTime": 12.4, "endTime": 14.9, "member": "V" },
-    { "startTime": 28.1, "endTime": 30.2, "member": "Jimin" },
-    { "startTime": 44.5, "endTime": 47.1, "member": "RM" },
-    { "startTime": 61.0, "endTime": 64.5, "member": "Jin" },
-    { "startTime": 86.4, "endTime": 89.4, "member": "SUGA" },
-    { "startTime": 107.2, "endTime": 110.3, "member": "j-hope" },
-    { "startTime": 131.0, "endTime": 133.4, "member": "Jungkook" }
+    { "startTime": 0.0, "endTime": 11.0, "member": "Jungkook" },
+    { "startTime": 20.0, "endTime": 26.0, "member": "RM" },
+    { "startTime": 26.0, "endTime": 33.0, "member": "j-hope" },
+    { "startTime": 33.0, "endTime": 40.0, "member": "SUGA" },
+    { "startTime": 58.0, "endTime": 65.0, "member": "Jimin" },
+    { "startTime": 65.0, "endTime": 72.0, "member": "V" },
+    { "startTime": 72.0, "endTime": 78.0, "member": "Jin" }
   ],
-  "questions": [
-    { "id": 1, "startTime": 12.4, "endTime": 14.9, "correctMember": "V" },
-    { "id": 2, "startTime": 28.1, "endTime": 30.2, "correctMember": "Jimin" },
-    { "id": 3, "startTime": 44.5, "endTime": 47.1, "correctMember": "RM" }
-  ]
+  "questions": []
 }

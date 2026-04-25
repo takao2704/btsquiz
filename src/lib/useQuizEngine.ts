@@ -86,10 +86,7 @@ export function useQuizEngine(quizData: QuizData) {
       }
 
       const score = nextAttempts.filter((attempt) => attempt.isCorrect).length;
-      const lastQuestion = quizData.questions[quizData.questions.length - 1];
-      const isFinished =
-        nextAttempts.length === quizData.questions.length &&
-        (lastQuestion ? nextTime >= lastQuestion.endTime : true);
+      const isFinished = nextTime >= quizData.videoDuration;
 
       return {
         ...prev,
