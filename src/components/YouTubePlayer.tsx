@@ -78,8 +78,7 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
           controls: 1,
           playsinline: 1,
           mute: 1,
-          rel: 0,
-          origin: window.location.origin
+          rel: 0
         },
         events: {
           onReady: (event) => {
