@@ -9,6 +9,6 @@ export default defineConfig({
   base: basePath,
   test: {
     environment: "jsdom",
-    include: ["src/**/*.test.ts"]
+    include: ["src/**/*.test.{ts,tsx}"]
   }
 });
