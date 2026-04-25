@@ -1,13 +1,17 @@
 import rawQuizData from "./quizData.json";
 import type { Question, QuizData, SoloSegment } from "../types";
 
+const MINIMUM_QUESTION_START_TIME_SECONDS = 1;
+
 function buildQuestionsFromSoloSegments(soloSegments: SoloSegment[]): Question[] {
-  return soloSegments.map((segment, index) => ({
-    id: index + 1,
-    startTime: segment.startTime,
-    endTime: segment.endTime,
-    correctMember: segment.member
-  }));
+  return soloSegments
+    .filter((segment) => segment.startTime >= MINIMUM_QUESTION_START_TIME_SECONDS)
+    .map((segment, index) => ({
+      id: index + 1,
+      startTime: segment.startTime,
+      endTime: segment.endTime,
+      correctMember: segment.member
+    }));
 }
 
 function normalizeQuestions(rawQuestions: Question[]): Question[] {
