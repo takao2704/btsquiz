@@ -76,3 +76,17 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.player-error {
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid #ef4444;
+  color: #fee2e2;
+  background: #450a0a;
+}
+
+.player-error p {
+  margin: 0;
+}
