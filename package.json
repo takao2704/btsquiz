@@ -9,7 +9,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "postbuild": "node scripts/create-404.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
