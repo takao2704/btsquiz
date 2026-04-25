@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import quizData from "../data/quizData";
 import type { Attempt } from "../types";
 
@@ -9,13 +9,11 @@ type ResultState = {
 };
 
 export function ResultPage() {
-  const navigate = useNavigate();
   const location = useLocation();
   const result = (location.state as ResultState | null) ?? null;
 
   if (!result) {
-    navigate("/");
-    return null;
+    return <Navigate to="/" replace />;
   }
 
   const accuracy = result.total > 0 ? Math.round((result.score / result.total) * 100) : 0;
