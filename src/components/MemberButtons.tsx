@@ -8,6 +8,17 @@ type Props = {
   onSelect: (member: MemberName) => void;
 };
 
+const memberNicknames: Record<MemberName, string> = {
+  Jungkook: "ジョングク / グク",
+  RM: "ナムジュン / ナム",
+  "j-hope": "ホソク / ホビ",
+  SUGA: "ユンギ / シュガ",
+  Jimin: "ジミン",
+  V: "テヒョン / テテ",
+  Jin: "ソクジン / ジン"
+};
+
+
 export function MemberButtons({ members, visible, disabled, suggestedMembers, onSelect }: Props) {
   if (!visible) {
     return null;
@@ -27,7 +38,8 @@ export function MemberButtons({ members, visible, disabled, suggestedMembers, on
             disabled={disabled || (hasSuggestion && !isSuggested)}
             onClick={() => onSelect(member)}
           >
-            {member}
+            {member} ({memberNicknames[member]})
+
           </button>
         );
       })}

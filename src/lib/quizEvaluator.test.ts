@@ -10,10 +10,10 @@ describe("quizEvaluator", () => {
     expect(isQuestionActive(12, question)).toBe(false);
   });
 
-  it("finalizes when crossing endTime with tolerance", () => {
+  it("finalizes when crossing endTime", () => {
     const question = { id: 1, startTime: 1, endTime: 2, correctMember: "V" as const };
-    expect(shouldFinalizeQuestion(1.7, 1.79, question)).toBe(false);
-    expect(shouldFinalizeQuestion(1.7, 1.81, question)).toBe(true);
+    expect(shouldFinalizeQuestion(1.7, 1.99, question)).toBe(false);
+    expect(shouldFinalizeQuestion(1.7, 2.0, question)).toBe(true);
   });
 
   it("evaluates correctness", () => {
