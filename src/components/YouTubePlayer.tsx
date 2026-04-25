@@ -9,7 +9,7 @@ declare global {
           videoId: string;
           playerVars?: Record<string, number>;
           events?: {
-            onReady?: () => void;
+            onReady?: (event: { target: { playVideo: () => void } }) => void;
             onStateChange?: (event: { data: number }) => void;
           };
         }
@@ -68,9 +68,18 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
 
       player = new window.YT.Player("yt-player", {
         videoId,
-        playerVars: { playsinline: 1 },
+        playerVars: {
+          autoplay: 1,
+          controls: 1,
+          playsinline: 1,
+          mute: 1,
+          rel: 0
+        },
         events: {
-          onReady: () => onReady(),
+          onReady: (event) => {
+            event.target.playVideo();
+            onReady();
+          },
           onStateChange: (event) => {
             if (event.data === window.YT.PlayerState.PLAYING && timerRef.current === null) {
               timerRef.current = window.setInterval(() => {
