@@ -4,9 +4,10 @@ declare global {
   interface Window {
     YT: {
       Player: new (
-        elementId: string,
+        element: string | HTMLElement,
         options: {
           videoId: string;
+          host?: string;
           playerVars?: Record<string, string | number>;
           events?: {
             onReady?: (event: { target: { playVideo: () => void } }) => void;
@@ -37,6 +38,7 @@ function loadYouTubeApi() {
   if (!apiPromise) {
     apiPromise = new Promise<void>((resolve, reject) => {
       let settled = false;
+      const previousReady = window.onYouTubeIframeAPIReady;
 
       const timeoutId = window.setTimeout(() => {
         if (settled) {
@@ -80,7 +82,10 @@ function loadYouTubeApi() {
         document.body.append(script);
       }
 
-      window.onYouTubeIframeAPIReady = () => done();
+      window.onYouTubeIframeAPIReady = () => {
+        previousReady?.();
+        done();
+      };
     });
   }
 
@@ -102,14 +107,17 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
           return;
         }
 
-        player = new window.YT.Player(containerRef.current.id, {
+        player = new window.YT.Player(containerRef.current, {
           videoId,
+          host: "https://www.youtube.com",
           playerVars: {
             autoplay: 1,
             controls: 1,
             playsinline: 1,
             mute: 1,
-            rel: 0
+            rel: 0,
+            enablejsapi: 1,
+            origin: window.location.origin
           },
           events: {
             onReady: (event) => {
@@ -153,5 +161,5 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
     );
   }
 
-  return <div id="yt-player" ref={containerRef} className="player" />;
+  return <div ref={containerRef} className="player" />;
 }
