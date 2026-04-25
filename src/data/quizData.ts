@@ -33,6 +33,7 @@ const quizData: QuizData = {
   members: rawQuizData.members as QuizData["members"],
   soloSegments,
   questions
+
 };
 
 export default quizData;

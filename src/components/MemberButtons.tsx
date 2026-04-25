@@ -18,6 +18,7 @@ const memberNicknames: Record<MemberName, string> = {
   Jin: "ソクジン / ジン"
 };
 
+
 export function MemberButtons({ members, visible, disabled, suggestedMembers, onSelect }: Props) {
   if (!visible) {
     return null;
@@ -38,6 +39,7 @@ export function MemberButtons({ members, visible, disabled, suggestedMembers, on
             onClick={() => onSelect(member)}
           >
             {member} ({memberNicknames[member]})
+
           </button>
         );
       })}
