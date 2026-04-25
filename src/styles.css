@@ -1,0 +1,78 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #f8fafc;
+  background: #0f172a;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #020617;
+  margin: 12px 0;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+}
+
+.member-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.member-button,
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  border-radius: 10px;
+  border: 0;
+  padding: 0 12px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.member-button,
+.primary-button {
+  color: #0f172a;
+  background: #facc15;
+}
+
+.secondary-button {
+  color: #f8fafc;
+  background: #334155;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
+}
