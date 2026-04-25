@@ -36,11 +36,24 @@ let apiPromise: Promise<void> | null = null;
 function loadYouTubeApi() {
   if (!apiPromise) {
     apiPromise = new Promise<void>((resolve, reject) => {
+      let settled = false;
+
       const timeoutId = window.setTimeout(() => {
+        if (settled) {
+          return;
+        }
+
+        settled = true;
+        apiPromise = null;
         reject(new Error("YouTube API の読み込みがタイムアウトしました。"));
       }, 8000);
 
       const done = () => {
+        if (settled) {
+          return;
+        }
+
+        settled = true;
         clearTimeout(timeoutId);
         resolve();
       };
@@ -55,7 +68,13 @@ function loadYouTubeApi() {
         const script = document.createElement("script");
         script.src = "https://www.youtube.com/iframe_api";
         script.onerror = () => {
+          if (settled) {
+            return;
+          }
+
+          settled = true;
           clearTimeout(timeoutId);
+          apiPromise = null;
           reject(new Error("YouTube API スクリプトの読み込みに失敗しました。"));
         };
         document.body.append(script);
