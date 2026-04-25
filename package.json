@@ -12,7 +12,8 @@
     "test": "vitest run",
     "postbuild": "node scripts/create-404.mjs",
     "test:e2e": "playwright test",
-    "test:all": "npm test && npm run test:e2e"
+    "test:all": "npm test && npm run test:e2e",
+    "test:e2e:setup": "bash scripts/setup-playwright-linux.sh"
   },
   "dependencies": {
     "react": "^18.3.1",

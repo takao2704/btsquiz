@@ -28,6 +28,7 @@ npm run dev
 ```bash
 npm run build
 npm test
+npm run test:e2e:setup
 npm run test:e2e
 ```
 
@@ -120,4 +121,4 @@ npm run test:e2e
 ```
 
 - `npm run test:e2e` は Playwright でブラウザ実行し、**画面遷移とブラウザ実行時エラー（pageerror / console error）** を確認します。
-- 初回はブラウザ本体のインストールが必要です（`npx playwright install chromium`）。
+- Linux 環境では `npm run test:e2e:setup` でシステム依存ライブラリと Chromium をまとめて導入できます。
