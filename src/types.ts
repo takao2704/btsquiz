@@ -7,6 +7,12 @@ export type Question = {
   correctMember: MemberName;
 };
 
+export type SoloSegment = {
+  startTime: number;
+  endTime: number;
+  member: MemberName;
+};
+
 export type Attempt = {
   questionId: number;
   selectedMember: MemberName | null;
@@ -25,6 +31,8 @@ export type QuizState = {
 export type QuizData = {
   videoId: string;
   title: string;
+  videoDuration: number;
   members: MemberName[];
+  soloSegments: SoloSegment[];
   questions: Question[];
 };
