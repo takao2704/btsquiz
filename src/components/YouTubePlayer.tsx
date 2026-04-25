@@ -7,7 +7,7 @@ declare global {
         elementId: string,
         options: {
           videoId: string;
-          playerVars?: Record<string, number>;
+          playerVars?: Record<string, string | number>;
           events?: {
             onReady?: (event: { target: { playVideo: () => void } }) => void;
             onStateChange?: (event: { data: number }) => void;
@@ -55,6 +55,7 @@ function loadYouTubeApi() {
 }
 
 export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -66,14 +67,19 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
         return;
       }
 
-      player = new window.YT.Player("yt-player", {
+      if (!containerRef.current) {
+        return;
+      }
+
+      player = new window.YT.Player(containerRef.current.id, {
         videoId,
         playerVars: {
           autoplay: 1,
           controls: 1,
           playsinline: 1,
           mute: 1,
-          rel: 0
+          rel: 0,
+          origin: window.location.origin
         },
         events: {
           onReady: (event) => {
@@ -97,10 +103,11 @@ export function YouTubePlayer({ videoId, onReady, onTick }: Props) {
       mounted = false;
       if (timerRef.current !== null) {
         clearInterval(timerRef.current);
+        timerRef.current = null;
       }
       player?.destroy();
     };
   }, [videoId, onReady, onTick]);
 
-  return <div id="yt-player" className="player" />;
+  return <div id="yt-player" ref={containerRef} className="player" />;
 }
