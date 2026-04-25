@@ -39,7 +39,6 @@ export function MemberButtons({ members, visible, disabled, suggestedMembers, on
             onClick={() => onSelect(member)}
           >
             {member} ({memberNicknames[member]})
-
           </button>
         );
       })}
