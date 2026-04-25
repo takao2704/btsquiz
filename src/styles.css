@@ -26,6 +26,24 @@ body {
   justify-content: space-between;
 }
 
+.analysis-panel {
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #0b1225;
+}
+
+.analysis-panel h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+
+.analysis-panel p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
 .member-grid {
   margin-top: 12px;
   display: grid;
@@ -51,6 +69,10 @@ body {
 .primary-button {
   color: #0f172a;
   background: #facc15;
+}
+
+.member-button--suggested {
+  box-shadow: 0 0 0 3px #22d3ee;
 }
 
 .secondary-button {
