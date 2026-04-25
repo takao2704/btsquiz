@@ -1,0 +1,4 @@
+interface:
+  display_name: "Playwright Regression Check"
+  short_description: "Install deps and run btsquiz browser regression tests."
+  default_prompt: "Use this skill to install Playwright dependencies and run browser regression tests for btsquiz, then summarize results."
