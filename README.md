@@ -13,7 +13,7 @@ BTS メンバー当てクイズ（Vite + React + TypeScript）です。
 ## エラーが出たときの確認ポイント
 
 - Actions の `Deploy to GitHub Pages` ワークフローが成功しているか。
-- 公開 URL が `https://<user>.github.io/btsquiz/` 形式になっているか。
+- 公開 URL が `https://<user>.github.io/<repo>/` 形式になっているか（例: `https://takao2704.github.io/quiz/`）。
 - SPA のリロードで 404 が出る場合でも、`postbuild` で `dist/404.html` を自動生成するため改善済み。
 
 ## ローカル実行
