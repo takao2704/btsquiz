@@ -23,6 +23,18 @@ npm ci
 npm run dev
 ```
 
+## ソロ区間（`soloSegments`）の定義
+
+`src/data/quizData.json` の `soloSegments` は、**動画内で特定メンバーのソロとして扱う時間帯**を表す配列です。  
+各要素は次の 3 つで構成します。
+
+- `startTime`（number）: 区間開始秒（動画先頭を `0` とした経過秒）
+- `endTime`（number）: 区間終了秒（`startTime` より大きい値）
+- `member`（`"RM" | "Jin" | "SUGA" | "j-hope" | "Jimin" | "V" | "Jungkook"`）: その区間の対象メンバー
+
+TypeScript 上の型定義は `src/types.ts` の `SoloSegment` です。  
+また、`questions` が空のときは `soloSegments` から問題を自動生成し、現実装では `startTime >= 1` 秒の区間のみ問題化します。
+
 ## ビルド・テスト
 
 ```bash
