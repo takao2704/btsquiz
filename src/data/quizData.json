@@ -2,15 +2,61 @@
   "videoId": "gdZLi9oWNZg",
   "title": "BTS (방탄소년단) 'DNA' Official MV",
   "videoDuration": 223.0,
-  "members": ["RM", "Jin", "SUGA", "j-hope", "Jimin", "V", "Jungkook"],
+  "members": [
+    "RM",
+    "Jin",
+    "SUGA",
+    "j-hope",
+    "Jimin",
+    "V",
+    "Jungkook"
+  ],
   "soloSegments": [
-    { "startTime": 0.0, "endTime": 11.0, "member": "Jungkook" },
-    { "startTime": 20.0, "endTime": 26.0, "member": "RM" },
-    { "startTime": 26.0, "endTime": 33.0, "member": "j-hope" },
-    { "startTime": 33.0, "endTime": 40.0, "member": "SUGA" },
-    { "startTime": 58.0, "endTime": 65.0, "member": "Jimin" },
-    { "startTime": 65.0, "endTime": 72.0, "member": "V" },
-    { "startTime": 72.0, "endTime": 78.0, "member": "Jin" }
+    {
+      "startTime": 23.0,
+      "endTime": 49.0,
+      "member": "Jungkook"
+    },
+    {
+      "startTime": 50.0,
+      "endTime": 56.0,
+      "member": "RM"
+    },
+    {
+      "startTime": 57.0,
+      "endTime": 64.0,
+      "member": "j-hope"
+    },
+    {
+      "startTime": 67.0,
+      "endTime": 72.0,
+      "member": "Jin"
+    },
+    {
+      "startTime": 75.0,
+      "endTime": 81.0,
+      "member": "Jimin"
+    },
+    {
+      "startTime": 83.0,
+      "endTime": 94.0,
+      "member": "V"
+    },
+    {
+      "startTime": 95.0,
+      "endTime": 98.0,
+      "member": "RM"
+    },
+    {
+      "startTime": 101.0,
+      "endTime": 108.0,
+      "member": "SUGA"
+    },
+    {
+      "startTime": 109.0,
+      "endTime": 114.0,
+      "member": "Jimin"
+    }
   ],
   "questions": []
 }

@@ -49,4 +49,18 @@ describe("useQuizEngine", () => {
     ]);
     expect(result.current.state.score).toBe(1);
   });
+
+  it("locks answer changes after first click in the same question window", () => {
+    const { result } = renderHook(() => useQuizEngine(quizData));
+
+    act(() => result.current.begin());
+    act(() => result.current.tick(10.2));
+    act(() => result.current.submitAnswer("V"));
+    act(() => result.current.submitAnswer("RM"));
+    act(() => result.current.tick(12));
+
+    expect(result.current.state.attempts).toEqual([
+      { questionId: 1, selectedMember: "V", isCorrect: true, answeredAt: 10.2 }
+    ]);
+  });
 });
