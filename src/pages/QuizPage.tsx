@@ -44,7 +44,7 @@ export function QuizPage() {
     <main className="page">
       <h2>Quiz</h2>
       <YouTubePlayer videoId={quizData.videoId} onReady={engine.begin} onTick={engine.tick} />
-      <QuizHUD currentQuestion={engine.currentQuestionIndex} totalQuestions={engine.totalQuestions} score={engine.state.score} />
+      <QuizHUD progressQuestion={engine.progressQuestionCount} totalQuestions={engine.totalQuestions} />
       <MemberButtons
         members={quizData.members}
         visible={engine.activeQuestion !== null}

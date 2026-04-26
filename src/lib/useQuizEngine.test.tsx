@@ -27,12 +27,14 @@ describe("useQuizEngine", () => {
     act(() => result.current.tick(10));
     expect(result.current.activeQuestion?.id).toBe(1);
     expect(result.current.currentQuestionIndex).toBe(1);
+    expect(result.current.progressQuestionCount).toBe(1);
 
     act(() => result.current.tick(11.99));
     expect(result.current.activeQuestion?.id).toBe(1);
 
     act(() => result.current.tick(12));
     expect(result.current.activeQuestion?.id ?? null).toBeNull();
+    expect(result.current.progressQuestionCount).toBe(1);
   });
 
   it("records answer time as-is and finalizes result when question closes", () => {

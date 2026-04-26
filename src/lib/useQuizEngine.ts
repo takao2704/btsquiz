@@ -101,11 +101,13 @@ export function useQuizEngine(quizData: QuizData) {
 
   const activeQuestion = state.activeQuestionId ? questionById.get(state.activeQuestionId) ?? null : null;
   const currentQuestionIndex = activeQuestion ? quizData.questions.findIndex((question) => question.id === activeQuestion.id) + 1 : 0;
+  const progressQuestionCount = quizData.questions.filter((question) => state.currentTime >= question.startTime).length;
 
   return {
     state,
     activeQuestion,
     currentQuestionIndex,
+    progressQuestionCount,
     totalQuestions: quizData.questions.length,
     begin,
     reset,
