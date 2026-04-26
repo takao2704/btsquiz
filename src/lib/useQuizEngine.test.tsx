@@ -27,12 +27,14 @@ describe("useQuizEngine", () => {
     act(() => result.current.tick(10));
     expect(result.current.activeQuestion?.id).toBe(1);
     expect(result.current.currentQuestionIndex).toBe(1);
+    expect(result.current.progressQuestionCount).toBe(1);
 
     act(() => result.current.tick(11.99));
     expect(result.current.activeQuestion?.id).toBe(1);
 
     act(() => result.current.tick(12));
     expect(result.current.activeQuestion?.id ?? null).toBeNull();
+    expect(result.current.progressQuestionCount).toBe(1);
   });
 
   it("records answer time as-is and finalizes result when question closes", () => {
@@ -48,5 +50,19 @@ describe("useQuizEngine", () => {
       { questionId: 1, selectedMember: "V", isCorrect: true, answeredAt: 10.43 }
     ]);
     expect(result.current.state.score).toBe(1);
+  });
+
+  it("locks answer changes after first click in the same question window", () => {
+    const { result } = renderHook(() => useQuizEngine(quizData));
+
+    act(() => result.current.begin());
+    act(() => result.current.tick(10.2));
+    act(() => result.current.submitAnswer("V"));
+    act(() => result.current.submitAnswer("RM"));
+    act(() => result.current.tick(12));
+
+    expect(result.current.state.attempts).toEqual([
+      { questionId: 1, selectedMember: "V", isCorrect: true, answeredAt: 10.2 }
+    ]);
   });
 });

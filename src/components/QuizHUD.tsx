@@ -1,14 +1,12 @@
 type Props = {
-  currentQuestion: number;
+  progressQuestion: number;
   totalQuestions: number;
-  score: number;
 };
 
-export function QuizHUD({ currentQuestion, totalQuestions, score }: Props) {
+export function QuizHUD({ progressQuestion, totalQuestions }: Props) {
   return (
     <div className="hud">
-      <p>問題: {currentQuestion}/{totalQuestions}</p>
-      <p>スコア: {score}正解</p>
+      <p>進捗: {progressQuestion}/{totalQuestions}</p>
     </div>
   );
 }

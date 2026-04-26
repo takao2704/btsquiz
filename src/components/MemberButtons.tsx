@@ -4,7 +4,7 @@ type Props = {
   members: MemberName[];
   visible: boolean;
   disabled: boolean;
-  suggestedMembers: MemberName[];
+  selectedMember: MemberName | null;
   onSelect: (member: MemberName) => void;
 };
 
@@ -19,23 +19,22 @@ const memberNicknames: Record<MemberName, string> = {
 };
 
 
-export function MemberButtons({ members, visible, disabled, suggestedMembers, onSelect }: Props) {
+export function MemberButtons({ members, visible, disabled, selectedMember, onSelect }: Props) {
   if (!visible) {
     return null;
   }
 
-  const hasSuggestion = suggestedMembers.length > 0;
-
   return (
     <div className="member-grid" aria-label="member-buttons">
       {members.map((member) => {
-        const isSuggested = suggestedMembers.includes(member);
+        const isSelected = selectedMember === member;
 
         return (
           <button
             key={member}
-            className={`member-button ${isSuggested ? "member-button--suggested" : ""}`.trim()}
-            disabled={disabled || (hasSuggestion && !isSuggested)}
+            className={`member-button ${isSelected ? "member-button--selected" : ""}`.trim()}
+            disabled={disabled}
+            aria-pressed={isSelected}
             onClick={() => onSelect(member)}
           >
             {member} ({memberNicknames[member]})
