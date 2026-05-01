@@ -5,9 +5,14 @@ export function HomePage() {
     <main className="page">
       <h1>BTS Face & Name Quiz</h1>
       <p>BTS初心者向けに、MVを見ながらメンバー名を覚えるクイズです。</p>
-      <Link to="/quiz" className="primary-button">
-        はじめる
-      </Link>
+      <div className="actions">
+        <Link to="/quiz/dna" className="primary-button">
+          DNA（既存問題）
+        </Link>
+        <Link to="/quiz/blood-sweat-tears" className="secondary-button">
+          Blood Sweat & Tears（新しい問題）
+        </Link>
+      </div>
     </main>
   );
 }
