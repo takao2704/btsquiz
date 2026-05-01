@@ -2,19 +2,19 @@ import { describe, expect, it } from "vitest";
 import quizData from "./quizData";
 
 describe("quizData question generation", () => {
-  it("builds questions from configured solo segments", () => {
-    expect(quizData.questions.length).toBe(20);
+  it("uses configured questions when present", () => {
+    expect(quizData.questions.length).toBe(2);
     expect(quizData.questions[0]).toMatchObject({
       id: 1,
       startTime: 9,
       endTime: 14,
       correctMember: "Jungkook"
     });
-    expect(quizData.questions[19]).toMatchObject({
-      id: 20,
-      startTime: 169,
-      endTime: 173,
-      correctMember: "j-hope"
+    expect(quizData.questions[1]).toMatchObject({
+      id: 2,
+      startTime: 22,
+      endTime: 27,
+      correctMember: "V"
     });
   });
 });
