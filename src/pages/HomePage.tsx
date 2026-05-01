@@ -7,10 +7,10 @@ export function HomePage() {
       <p>BTS初心者向けに、MVを見ながらメンバー名を覚えるクイズです。</p>
       <div className="actions">
         <Link to="/quiz/dna" className="primary-button">
-          DNA（既存問題）
+          Dynamite（既存問題）
         </Link>
         <Link to="/quiz/blood-sweat-tears" className="secondary-button">
-          Blood Sweat & Tears（新しい問題）
+          Butter（新しい問題）
         </Link>
       </div>
     </main>
