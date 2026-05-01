@@ -1,7 +1,10 @@
-import rawQuizData from "./quizData.json";
+import rawDefaultQuizData from "./quizData.json";
+import rawBloodSweatTearsQuizData from "./quizDataBloodSweatTears.json";
 import type { Question, QuizData, SoloSegment } from "../types";
 
 const MINIMUM_QUESTION_START_TIME_SECONDS = 1;
+
+export type QuizSetId = "dna" | "blood-sweat-tears";
 
 function buildQuestionsFromSoloSegments(soloSegments: SoloSegment[]): Question[] {
   return soloSegments
@@ -23,20 +26,29 @@ function normalizeQuestions(rawQuestions: Question[]): Question[] {
     }));
 }
 
-const soloSegments = rawQuizData.soloSegments as QuizData["soloSegments"];
-const configuredQuestions = rawQuizData.questions as QuizData["questions"];
+function buildQuizData(rawQuizData: QuizData): QuizData {
+  const soloSegments = rawQuizData.soloSegments as QuizData["soloSegments"];
+  const configuredQuestions = rawQuizData.questions as QuizData["questions"];
 
-const questions = configuredQuestions.length > 0
-  ? normalizeQuestions(configuredQuestions)
-  : buildQuestionsFromSoloSegments(soloSegments);
+  const questions = configuredQuestions.length > 0
+    ? normalizeQuestions(configuredQuestions)
+    : buildQuestionsFromSoloSegments(soloSegments);
 
-const quizData: QuizData = {
-  videoId: rawQuizData.videoId,
-  title: rawQuizData.title,
-  videoDuration: rawQuizData.videoDuration,
-  members: rawQuizData.members as QuizData["members"],
-  soloSegments,
-  questions
+  return {
+    videoId: rawQuizData.videoId,
+    title: rawQuizData.title,
+    videoDuration: rawQuizData.videoDuration,
+    members: rawQuizData.members as QuizData["members"],
+    soloSegments,
+    questions
+  };
+}
+
+export const quizDataBySet: Record<QuizSetId, QuizData> = {
+  dna: buildQuizData(rawDefaultQuizData as QuizData),
+  "blood-sweat-tears": buildQuizData(rawBloodSweatTearsQuizData as QuizData)
 };
+
+const quizData = quizDataBySet.dna;
 
 export default quizData;

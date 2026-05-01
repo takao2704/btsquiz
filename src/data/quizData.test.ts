@@ -1,20 +1,24 @@
 import { describe, expect, it } from "vitest";
-import quizData from "./quizData";
+import { quizDataBySet } from "./quizData";
 
 describe("quizData question generation", () => {
-  it("builds questions from configured solo segments", () => {
-    expect(quizData.questions.length).toBe(10);
-    expect(quizData.questions[0]).toMatchObject({
+  it("keeps existing DNA questions", () => {
+    expect(quizDataBySet.dna.questions.length).toBe(10);
+    expect(quizDataBySet.dna.questions[0]).toMatchObject({
       id: 1,
       startTime: 23,
       endTime: 49,
       correctMember: "Jungkook"
     });
-    expect(quizData.questions[9]).toMatchObject({
-      id: 10,
-      startTime: 167,
-      endTime: 174,
-      correctMember: "Jimin"
+  });
+
+  it("builds Blood Sweat & Tears questions", () => {
+    expect(quizDataBySet["blood-sweat-tears"].questions.length).toBe(20);
+    expect(quizDataBySet["blood-sweat-tears"].questions[1]).toMatchObject({
+      id: 2,
+      startTime: 22,
+      endTime: 27,
+      correctMember: "V"
     });
   });
 });
